@@ -146,3 +146,9 @@ scp dist/electron-boilerplate-pure-1.0.1-setup.exe user@server:/electron-boilerp
 **问题**: `EBUSY: resource busy or locked`
 
 **解决**: 关闭开发工具，删除 `dist` 目录，重新打包
+
+## License
+
+2026 © Lucifer, Released under the MIT License.
+
+[个人网站](https://superlucifer.cn)·[GitHub](https://github.com/luciferoho)
