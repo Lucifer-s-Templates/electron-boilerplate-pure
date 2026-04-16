@@ -25,7 +25,6 @@ electron-app/
 │   │   │   ├── fileHandlers.js          # 文件处理
 │   │   │   ├── netRequestHandlers.js    # 网络请求
 │   │   │   ├── settingHandlers.js       # 主题设置
-│   │   │   ├── systemInfoHandlers.js    # 系统信息（如MAC地址）
 │   │   │   └── uploadHandlers.js        # 文件上传
 │   │   ├── utils/            # 工具函数
 │   │   │   ├── fileType.js   # 文件类型相关
