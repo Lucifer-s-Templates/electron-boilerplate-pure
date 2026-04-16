@@ -1,6 +1,5 @@
 <template>
   <div class="app-container home">
-    <div class="home-header">文件上传</div>
     <div class="home-main">
       <GlobalSearch @select="onSearchFileSelect" />
       <div class="module-container">
@@ -52,7 +51,6 @@
         </div>
       </div>
     </div>
-
     <div class="home-bottom">
       <div class="file-count">
         当前已选择 <span class="count">{{ form.fileList.length }}</span> 个文件
@@ -159,20 +157,8 @@
   .home {
     position: relative;
 
-    .home-header {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1;
-      padding: 16px;
-      border-bottom: 1px solid var(--el-border-color);
-      background: var(--el-bg-color);
-      color: var(--el-text-color-primary);
-      border-radius: 4px 4px 0 0;
-      user-select: none;
-    }
-
     .home-main {
-      height: calc(100% - 49px - 64px);
+      height: calc(100% - 64px);
       background: var(--el-bg-color);
       overflow: auto;
       padding: 16px;

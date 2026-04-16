@@ -151,4 +151,4 @@ scp dist/electron-boilerplate-pure-1.0.1-setup.exe user@server:/electron-boilerp
 
 2026 © Lucifer, Released under the MIT License.
 
-[个人网站](https://superlucifer.cn)·[GitHub](https://github.com/luciferoho)
+[个人网站](https://superlucifer.cn) · [GitHub](https://github.com/luciferoho)
