@@ -1,0 +1,35 @@
+// 外边距样式
+$margin-values: 0, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64;
+
+// 生成margin样式
+@each $value in $margin-values {
+  .m-#{$value} {
+    margin: #{$value}px;
+  }
+
+  .mb-#{$value} {
+    margin-bottom: #{$value}px;
+  }
+
+  .mt-#{$value} {
+    margin-top: #{$value}px;
+  }
+
+  .ml-#{$value} {
+    margin-left: #{$value}px;
+  }
+
+  .mr-#{$value} {
+    margin-right: #{$value}px;
+  }
+
+  .mx-#{$value} {
+    margin-left: #{$value}px;
+    margin-right: #{$value}px;
+  }
+
+  .my-#{$value} {
+    margin-top: #{$value}px;
+    margin-bottom: #{$value}px;
+  }
+}

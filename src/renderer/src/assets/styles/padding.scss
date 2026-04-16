@@ -1,0 +1,35 @@
+// 内边距样式
+$padding-values: 0, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64;
+
+// 生成padding样式
+@each $value in $padding-values {
+  .p-#{$value} {
+    padding: #{$value}px;
+  }
+
+  .pb-#{$value} {
+    padding-bottom: #{$value}px;
+  }
+
+  .pt-#{$value} {
+    padding-top: #{$value}px;
+  }
+
+  .pl-#{$value} {
+    padding-left: #{$value}px;
+  }
+
+  .pr-#{$value} {
+    padding-right: #{$value}px;
+  }
+
+  .px-#{$value} {
+    padding-left: #{$value}px;
+    padding-right: #{$value}px;
+  }
+
+  .py-#{$value} {
+    padding-top: #{$value}px;
+    padding-bottom: #{$value}px;
+  }
+}
