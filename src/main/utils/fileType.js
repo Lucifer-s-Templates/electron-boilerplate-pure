@@ -1,71 +1,70 @@
 import { extname } from 'path'
 
-// 根据移动端现有逻辑，返回对应文件类型
 // 图片
 const imageTypeMap = {
-  '.jpg': 'image',
-  '.jpeg': 'image',
-  '.png': 'image',
-  '.gif': 'image',
-  '.bmp': 'image',
-  '.webp': 'image'
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.png': 'image/png',
+  '.gif': 'image/gif',
+  '.bmp': 'image/bmp',
+  '.webp': 'image/webp'
 }
 
 // 视频
 const videoTypeMap = {
-  '.mp4': 'video',
-  '.avi': 'video',
-  '.mov': 'video',
-  '.wmv': 'video',
-  '.flv': 'video',
-  '.mkv': 'video',
-  '.rmvb': 'video',
-  '.m2v': 'video',
-  '.m3u8': 'video'
+  '.mp4': 'video/mp4',
+  '.avi': 'video/x-msvideo',
+  '.mov': 'video/quicktime',
+  '.wmv': 'video/x-ms-wmv',
+  '.flv': 'video/x-flv',
+  '.mkv': 'video/x-matroska',
+  '.rmvb': 'application/vnd.rn-realmedia-vbr',
+  '.m2v': 'video/mpeg',
+  '.m3u8': 'application/vnd.apple.mpegurl'
 }
 
 // 音频
 const audioTypeMap = {
-  '.mp3': 'audio',
-  '.wav': 'audio',
-  '.wmv': 'audio',
-  '.wma': 'audio'
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.wmv': 'audio/x-ms-wmv',
+  '.wma': 'audio/x-ms-wma'
 }
 
 // 压缩文件
 const zipTypeMap = {
   '.zip': 'application/zip',
-  '.rar': 'application/zip',
-  '.7z': 'application/zip'
+  '.rar': 'application/vnd.rar',
+  '.7z': 'application/x-7z-compressed'
 }
 
 // 幻灯片
 const pptTypeMap = {
-  '.ppt': 'ppt',
-  '.pptx': 'ppt'
+  '.ppt': 'application/vnd.ms-powerpoint',
+  '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
 }
 
 // 扫描件
 const pdfTypeMap = {
-  '.pdf': 'pdf'
+  '.pdf': 'application/pdf'
 }
 
 // 文档
 const docTypeMap = {
-  '.doc': 'docx',
-  '.docx': 'docx',
-  '.wps': 'wps'
+  '.doc': 'application/msword',
+  '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  '.wps': 'application/vnd.ms-works'
 }
 
 // 电子表格
 const xlsTypeMap = {
-  '.xls': 'xlsx',
-  '.xlsx': 'xlsx'
+  '.xls': 'application/vnd.ms-excel',
+  '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 }
 
 // txt
 const txtTypeMap = {
-  '.txt': 'text'
+  '.txt': 'text/plain'
 }
 
 // 文件类型映射（通过后缀名）
