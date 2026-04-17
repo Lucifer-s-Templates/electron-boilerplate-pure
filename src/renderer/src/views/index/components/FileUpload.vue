@@ -44,7 +44,7 @@
     // all-所有文件, image-图片, video-视频, audio-音频, document-文档, archive-压缩文件
     fileTypes: {
       type: Array,
-      default: () => ['image', 'video']
+      default: () => []
     },
     // 限制上传文件数量，默认9个
     maxFileCount: {

@@ -9,6 +9,20 @@
         :disabled="isSearching"
         @keyup.enter="handleFileSearch"
       >
+        <template #prepend>
+          <el-select
+            v-model="filterFileType"
+            placeholder="文件类型"
+            :clearable="isFileTypeClearable"
+          >
+            <el-option
+              v-for="item in availableFileTypeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </template>
         <template #append>
           <el-button :loading="isSearching" @click="handleFileSearch">搜索</el-button>
         </template>
@@ -18,7 +32,7 @@
     <div v-if="searchResult.length > 0" class="search-result">
       <div class="search-result-header">
         <span>搜索结果 ({{ searchResult.length }})</span>
-        <el-button link @click="searchResult = []">清空</el-button>
+        <el-button link @click="clearSearchResult">清空</el-button>
       </div>
       <div class="search-result-list">
         <div v-for="file in searchResult" :key="file.path" class="search-result-item">
@@ -50,7 +64,7 @@
 
   const props = defineProps({
     // 限制查询的文件类型，不传默认所有文件（类型对应文件后缀配置位于 src/shared/fileTypeConfig.js）
-    // all-所有文件, image-图片, video-视频, audio-音频, document-文档, archive-压缩文件
+    // image-图片, video-视频, audio-音频, document-文档, archive-压缩文件
     fileTypes: {
       type: Array,
       default: () => []
@@ -65,6 +79,38 @@
   const searchResult = ref([])
   const isSearching = ref(false)
 
+  // 文件类型下拉选项
+  const fileTypeOptions = [
+    { value: 'image', label: '图片文件' },
+    { value: 'video', label: '视频文件' },
+    { value: 'audio', label: '音频文件' },
+    { value: 'document', label: '文档文件' },
+    { value: 'archive', label: '压缩文件' }
+  ]
+  // 可用的文件类型下拉选项
+  const availableFileTypeOptions = computed(() => {
+    return props.fileTypes.length
+      ? fileTypeOptions.filter(item => props.fileTypes.includes(item.value))
+      : fileTypeOptions
+  })
+  // 选中的文件类型
+  const filterFileType = ref('')
+
+  // 设置默认文件类型
+  watch(
+    () => props.fileTypes,
+    newVal => {
+      if (newVal.length) {
+        filterFileType.value = newVal[0]
+      } else {
+        filterFileType.value = ''
+      }
+    },
+    { immediate: true }
+  )
+
+  const isFileTypeClearable = computed(() => !props.fileTypes.length)
+
   // 搜索文件
   async function handleFileSearch() {
     const keyword = fileFilterText.value.trim()
@@ -78,7 +124,7 @@
 
     try {
       // 将 fileTypes 传递给主进程进行过滤
-      const results = await window.api.searchFiles({ keyword, fileTypes: props.fileTypes })
+      const results = await window.api.searchFiles({ keyword, fileTypes: [filterFileType.value] })
       searchResult.value = results
       if (results.length === 0) {
         proxy.$message.info('未找到匹配的文件')
@@ -110,6 +156,12 @@
   function selectSearchFile(file) {
     emit('select', { file })
   }
+
+  // 清空搜索结果
+  function clearSearchResult() {
+    fileFilterText.value = ''
+    searchResult.value = []
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -121,8 +173,22 @@
       justify-content: center;
       padding: 16px;
 
-      :deep(.el-input-group--append > .el-input__wrapper) {
+      :deep(.el-input-group__prepend) {
+        padding: 0;
+        box-shadow: none;
         border-radius: 20px 0 0 20px;
+        overflow: hidden;
+
+        .el-select {
+          width: 100px;
+          height: 100%;
+          margin: 0;
+
+          .el-select__wrapper {
+            height: 100%;
+            border-radius: 20px 0 0 20px;
+          }
+        }
       }
 
       :deep(.el-input-group__append) {
