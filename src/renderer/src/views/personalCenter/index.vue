@@ -27,8 +27,8 @@
 
 <script setup>
   import { useRouter } from 'vue-router'
-  import useUserStore from '../../store/modules/user'
-  import { getSystemFile } from '../../api/personalCenter'
+  import useUserStore from '@renderer/store/modules/user'
+  import { getSystemFile } from '@renderer/api/personalCenter'
   import UserInfo from './components/UserInfo.vue'
   import BaseInfoEdit from './components/BaseInfoEdit.vue'
   import PasswordEdit from './components/PasswordEdit.vue'

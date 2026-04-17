@@ -1,4 +1,4 @@
-import request from '../utils/request/index.js'
+import request from '@renderer/utils/request/index.js'
 
 // 登录方法
 export function login(mobile, password) {

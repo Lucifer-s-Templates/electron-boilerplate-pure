@@ -2,7 +2,7 @@ import { extname } from 'path'
 import {
   fileTypeMap,
   fileTypeFilters
-} from '../../shared/fileTypeConfig.js'
+} from '@shared/fileTypeConfig.js'
 
 export { fileTypeMap, fileTypeFilters }
 

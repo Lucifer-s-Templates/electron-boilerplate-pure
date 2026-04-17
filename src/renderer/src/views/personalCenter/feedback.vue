@@ -21,9 +21,9 @@
 </template>
 
 <script setup>
-  import useUserStore from '../../store/modules/user'
-  import { saveFeedback } from '../../api/personalCenter'
-  import UserInfo from '../personalCenter/components/UserInfo.vue'
+  import useUserStore from '@renderer/store/modules/user'
+  import { saveFeedback } from '@renderer/api/personalCenter'
+  import UserInfo from './components/UserInfo.vue'
   const userStore = useUserStore()
   const { proxy } = getCurrentInstance()
 

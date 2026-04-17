@@ -35,8 +35,8 @@
 </template>
 <script setup>
   import { ref, computed } from 'vue'
-  import { formatFileSize } from '../../utils/index.js'
-  import { fileTypeGroups } from '../../../../shared/fileTypeConfig.js'
+  import { formatFileSize } from '@renderer/utils/index.js'
+  import { fileTypeGroups } from '@shared/fileTypeConfig.js'
   const { proxy } = getCurrentInstance()
 
   const props = defineProps({

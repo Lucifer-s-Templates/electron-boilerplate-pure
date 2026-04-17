@@ -1,4 +1,4 @@
-import request from '../utils/request/index.js'
+import request from '@renderer/utils/request/index.js'
 
 // 查询单位
 export function queryOrgList() {
@@ -98,7 +98,7 @@ export function getSystemFile(data) {
         msg: 'success',
         data: {
           fileName:
-            data.fileType === 1 ? '系统操作手册.pdf' : 'electron-boilerplate-pure-1.0.1-setup.exe'
+            data.fileType === 1 ? 'electron-boilerplate.pdf' : 'electron-boilerplate-pure-1.0.1-setup.exe'
         }
       })
     }, 1500)

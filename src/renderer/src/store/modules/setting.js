@@ -1,4 +1,4 @@
-import { useElectronStore, ELECTRON_STORE_SETTING } from '../../composables/useElectronStore.js'
+import { useElectronStore, ELECTRON_STORE_SETTING } from '@renderer/composables/useElectronStore.js'
 
 /**
  * setting 全局状态管理 Store

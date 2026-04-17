@@ -60,7 +60,7 @@
 
 <script setup>
   import { ref } from 'vue'
-  import { formatFileSize, formatDate } from '../../utils/index.js'
+  import { formatFileSize, formatDate } from '@renderer/utils/index.js'
 
   const props = defineProps({
     // 限制查询的文件类型，不传默认所有文件（类型对应文件后缀配置位于 src/shared/fileTypeConfig.js）

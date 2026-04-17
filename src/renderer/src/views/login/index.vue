@@ -55,7 +55,7 @@
 
 <script setup>
   import { useRouter } from 'vue-router'
-  import useUserStore from '../../store/modules/user'
+  import useUserStore from '@renderer/store/modules/user'
   const { proxy } = getCurrentInstance()
   const router = useRouter()
 

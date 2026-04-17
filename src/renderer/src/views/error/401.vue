@@ -1,6 +1,6 @@
 <template>
   <div class="http401-container">
-    <img class="pic-401" src="../../assets/images/error/401.svg" alt="401" />
+    <img class="pic-401" src="@renderer/assets/images/error/401.svg" alt="401" />
     <div class="error">
       <div class="error__oops">401错误!</div>
       <div class="error__headline">您没有访问权限！</div>

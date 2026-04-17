@@ -30,9 +30,9 @@
 </template>
 
 <script setup name="BaseInfoEdit">
-  import LuciferDialog from '../../../components/LuciferDialog/index.vue'
-  import { queryOrgList, updateBaseInfo } from '../../../api/personalCenter'
-  import useUserStore from '../../../store/modules/user'
+  import LuciferDialog from '@renderer/components/LuciferDialog/index.vue'
+  import { queryOrgList, updateBaseInfo } from '@renderer/api/personalCenter'
+  import useUserStore from '@renderer/store/modules/user'
   const userStore = useUserStore()
 
   const { proxy } = getCurrentInstance()

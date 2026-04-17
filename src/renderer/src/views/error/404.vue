@@ -1,6 +1,6 @@
 <template>
   <div class="http404-container">
-    <img class="pic-404" src="../../assets/images/error/404.svg" alt="404" />
+    <img class="pic-404" src="@renderer/assets/images/error/404.svg" alt="404" />
     <div class="error">
       <div class="error__oops">404错误!</div>
       <div class="error__headline">找不到网页！</div>

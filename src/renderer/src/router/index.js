@@ -1,13 +1,13 @@
 import { createWebHashHistory, createRouter } from 'vue-router'
-import Layout from '../layout/index.vue'
+import Layout from '@renderer/layout/index.vue'
 
 /* 静态页面组件 */
-import Login from '../views/login/index.vue'
-import Error404 from '../views/error/404.vue'
-import Error401 from '../views/error/401.vue'
-import Index from '../views/index/index.vue'
-import PersonalCenter from '../views/personalCenter/index.vue'
-import Notice from '../views/notice/index.vue'
+import Login from '@renderer/views/login/index.vue'
+import Error404 from '@renderer/views/error/404.vue'
+import Error401 from '@renderer/views/error/401.vue'
+import Index from '@renderer/views/index/index.vue'
+import PersonalCenter from '@renderer/views/personalCenter/index.vue'
+import Notice from '@renderer/views/notice/index.vue'
 
 /**
  * Note: 路由配置项
@@ -82,7 +82,7 @@ export const constantRoutes = [
       },
       {
         path: '/feedback',
-        component: () => import('../views/personalCenter/feedback.vue'),
+        component: () => import('@renderer/views/personalCenter/feedback.vue'),
         name: 'Feedback',
         hidden: true,
         meta: { title: '意见反馈', icon: '', activeMenu: '/personalCenter' }

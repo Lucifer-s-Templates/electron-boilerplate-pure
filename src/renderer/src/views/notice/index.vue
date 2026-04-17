@@ -76,8 +76,8 @@
   </div>
 </template>
 <script setup>
-  import { getNoticeList } from '../../api/notice'
-  import { formatDate } from '../../utils'
+  import { getNoticeList } from '@renderer/api/notice'
+  import { formatDate } from '@renderer/utils'
   const router = useRouter()
 
   const loading = ref(false)

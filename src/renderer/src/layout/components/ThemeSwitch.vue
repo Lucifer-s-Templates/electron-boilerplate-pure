@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-  import useSettingStore from '../../store/modules/setting'
+  import useSettingStore from '@renderer/store/modules/setting'
 
   const settingStore = useSettingStore()
 

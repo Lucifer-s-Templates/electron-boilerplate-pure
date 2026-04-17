@@ -9,11 +9,21 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 export default defineConfig(({ mode }) => {
   return {
     main: {
+      resolve: {
+        alias: {
+          '@shared': resolve('src/shared')
+        }
+      },
       build: {
         watch: {}
       }
     },
     preload: {
+      resolve: {
+        alias: {
+          '@shared': resolve('src/shared')
+        }
+      },
       build: {
         watch: {}
       }
@@ -22,7 +32,7 @@ export default defineConfig(({ mode }) => {
       resolve: {
         alias: {
           '@renderer': resolve('src/renderer/src'),
-          '@': resolve('src/renderer/src')
+          '@shared': resolve('src/shared')
         }
       },
       plugins: [

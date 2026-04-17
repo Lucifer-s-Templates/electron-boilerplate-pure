@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-  import useUserStore from '../../store/modules/user'
+  import useUserStore from '@renderer/store/modules/user'
   import ThemeSwitch from './ThemeSwitch.vue'
 
   const route = useRoute()

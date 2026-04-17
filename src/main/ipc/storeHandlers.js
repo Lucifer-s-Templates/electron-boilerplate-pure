@@ -1,4 +1,4 @@
-import { ipcMain, safeStorage } from 'electron'
+import { ipcMain } from 'electron'
 import StoreModule from 'electron-store'
 import crypto from 'crypto'
 const Store = StoreModule.default || StoreModule

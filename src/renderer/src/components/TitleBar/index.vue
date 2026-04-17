@@ -92,8 +92,8 @@
 <script setup>
   import { ref, computed, onMounted } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import useUserStore from '../../store/modules/user.js'
-  import Logo from '../../assets/images//logo/64x64.png'
+  import useUserStore from '@renderer/store/modules/user.js'
+  import Logo from '@renderer/assets/images//logo/64x64.png'
 
   const route = useRoute()
   const router = useRouter()

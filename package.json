@@ -1,6 +1,6 @@
 {
   "name": "electron-boilerplate-pure",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "electron-boilerplate-pure",
   "main": "./out/main/index.js",
   "author": "Lucifer",

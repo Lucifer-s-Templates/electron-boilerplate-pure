@@ -84,7 +84,7 @@
 <script setup>
   import { ref, computed } from 'vue'
   import { Warning } from '@element-plus/icons-vue'
-  import useUpdate from '../../composables/useUpdate.js'
+  import useUpdate from '@renderer/composables/useUpdate.js'
 
   const { downloadUpdate, installUpdate } = useUpdate()
 

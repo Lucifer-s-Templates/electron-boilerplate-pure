@@ -1,11 +1,11 @@
-import { login as sysLogin, getInfo } from '../../api/login'
-import Cat1 from '../../assets/images/cat_1.svg'
-import Cat2 from '../../assets/images/cat_2.svg'
+import { login as sysLogin, getInfo } from '@renderer/api/login'
+import Cat1 from '@renderer/assets/images/cat_1.svg'
+import Cat2 from '@renderer/assets/images/cat_2.svg'
 import {
   useElectronStore,
   ELECTRON_STORE_TOKEN,
   ELECTRON_STORE_USER
-} from '../../composables/useElectronStore.js'
+} from '@renderer/composables/useElectronStore.js'
 import useSettingStore from './setting.js'
 
 /**

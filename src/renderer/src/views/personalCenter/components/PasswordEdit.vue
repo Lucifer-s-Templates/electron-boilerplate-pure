@@ -38,9 +38,9 @@
 
 <script setup name="PasswordEdit">
 import { ref } from 'vue'
-import LuciferDialog from '../../../components/LuciferDialog/index.vue'
-import { updatePassword } from '../../../api/personalCenter'
-import useUserStore from '../../../store/modules/user'
+import LuciferDialog from '@renderer/components/LuciferDialog/index.vue'
+import { updatePassword } from '@renderer/api/personalCenter'
+import useUserStore from '@renderer/store/modules/user'
 const userStore = useUserStore()
 
 const emit = defineEmits(['save-success'])

@@ -56,9 +56,9 @@
 </template>
 
 <script setup>
-  import GlobalSearch from '../../components/GlobalSearch/index.vue'
-  import DiskBox from '../../components/DiskBox/index.vue'
-  import FileUpload from '../../components/FileUpload/index.vue'
+  import GlobalSearch from '@renderer/components/GlobalSearch/index.vue'
+  import DiskBox from '@renderer/components/DiskBox/index.vue'
+  import FileUpload from '@renderer/components/FileUpload/index.vue'
 
   const { proxy } = getCurrentInstance()
 

@@ -1,6 +1,6 @@
 import { ElMessage } from 'element-plus'
-import useUserStore from '../../store/modules/user.js'
-import router from '../../router/index.js'
+import useUserStore from '@renderer/store/modules/user.js'
+import router from '@renderer/router/index.js'
 
 const baseURL = import.meta.env.VITE_APP_BASE_URL || ''
 const errorCode = {

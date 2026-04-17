@@ -5,7 +5,7 @@ import { createReadStream } from 'fs'
 import { homedir, tmpdir } from 'os'
 import { createHash } from 'crypto'
 import { fileTypeFilters, getFileType } from '../utils/fileType.js'
-import { fileTypeGroups } from '../../shared/fileTypeConfig.js'
+import { fileTypeGroups } from '@shared/fileTypeConfig.js'
 
 // 注册文件相关 IPC 处理器
 export function registerFileHandlers(app) {

@@ -10,14 +10,14 @@
 </template>
 
 <script setup>
-  import DesktopIcon from '../../assets/images/disk-icons/desktop.png'
-  import DownloadIcon from '../../assets/images/disk-icons/download.png'
-  import VideoIcon from '../../assets/images/disk-icons/video.png'
-  import DocumentIcon from '../../assets/images/disk-icons/document.png'
-  import DiskIcon from '../../assets/images/disk-icons/disk.png'
-  import WechatIcon from '../../assets/images/disk-icons/wechat.png'
-  import QQIcon from '../../assets/images/disk-icons/qq.png'
-  import OtherIcon from '../../assets/images/disk-icons/other.png'
+  import DesktopIcon from '@renderer/assets/images/disk-icons/desktop.png'
+  import DownloadIcon from '@renderer/assets/images/disk-icons/download.png'
+  import VideoIcon from '@renderer/assets/images/disk-icons/video.png'
+  import DocumentIcon from '@renderer/assets/images/disk-icons/document.png'
+  import DiskIcon from '@renderer/assets/images/disk-icons/disk.png'
+  import WechatIcon from '@renderer/assets/images/disk-icons/wechat.png'
+  import QQIcon from '@renderer/assets/images/disk-icons/qq.png'
+  import OtherIcon from '@renderer/assets/images/disk-icons/other.png'
 
   const props = defineProps({
     // 限制可选文件类型，默认所有文件

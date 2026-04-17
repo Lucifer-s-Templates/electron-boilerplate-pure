@@ -13,7 +13,7 @@
   </div>
 </template>
 <script setup>
-  import useUserStore from '../../../store/modules/user'
+  import useUserStore from '@renderer/store/modules/user'
   const userStore = useUserStore()
 
   const userInfo = computed(() => userStore.userInfo || {})
