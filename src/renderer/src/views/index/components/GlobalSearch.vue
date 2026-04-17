@@ -45,7 +45,17 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue'
   import { formatFileSize, formatDate } from '../../../utils/index.js'
+
+  const props = defineProps({
+    // 限制查询的文件类型，不传默认所有文件（类型对应文件后缀配置位于 src/shared/fileTypeConfig.js）
+    // all-所有文件, image-图片, video-视频, audio-音频, document-文档, archive-压缩文件
+    fileTypes: {
+      type: Array,
+      default: () => []
+    }
+  })
 
   const { proxy } = getCurrentInstance()
   const emit = defineEmits(['select'])
@@ -67,7 +77,8 @@
     searchResult.value = []
 
     try {
-      const results = await window.api.searchFiles(keyword)
+      // 将 fileTypes 传递给主进程进行过滤
+      const results = await window.api.searchFiles({ keyword, fileTypes: props.fileTypes })
       searchResult.value = results
       if (results.length === 0) {
         proxy.$message.info('未找到匹配的文件')
@@ -116,21 +127,21 @@
 
       :deep(.el-input-group__append) {
         border-radius: 0 20px 20px 0;
-        background-color: #409eff;
+        background-color: var(--el-color-primary);
         box-shadow:
-          0 1px 0 0 #409eff inset,
-          0 -1px 0 0 #409eff inset,
-          -1px 0 0 0 #409eff inset;
+          0 1px 0 0 var(--el-color-primary) inset,
+          0 -1px 0 0 var(--el-color-primary) inset,
+          -1px 0 0 0 var(--el-color-primary) inset;
         padding: 0 24px;
         color: #fff;
         cursor: pointer;
 
         &:hover {
-          background-color: #79bbff;
+          background-color: var(--el-color-primary-light-3);
           box-shadow:
-            0 1px 0 0 #79bbff inset,
-            0 -1px 0 0 #79bbff inset,
-            -1px 0 0 0 #79bbff inset;
+            0 1px 0 0 var(--el-color-primary-light-3) inset,
+            0 -1px 0 0 var(--el-color-primary-light-3) inset,
+            -1px 0 0 0 var(--el-color-primary-light-3) inset;
         }
       }
 

@@ -5,6 +5,7 @@ import { createReadStream } from 'fs'
 import { homedir, tmpdir } from 'os'
 import { createHash } from 'crypto'
 import { fileTypeFilters, getFileType } from '../utils/fileType.js'
+import { fileTypeGroups } from '../../shared/fileTypeConfig.js'
 
 // 注册文件相关 IPC 处理器
 export function registerFileHandlers(app) {
@@ -40,7 +41,7 @@ export function registerFileHandlers(app) {
 
     // 过滤掉快捷方式文件(.lnk)
     if (!result.canceled && result.filePaths.length > 0) {
-      result.filePaths = result.filePaths.filter((filePath) => {
+      result.filePaths = result.filePaths.filter(filePath => {
         const ext = filePath.split('.').pop()?.toLowerCase()
         return ext !== 'lnk'
       })
@@ -73,14 +74,48 @@ export function registerFileHandlers(app) {
     }
   }
 
+  // 获取允许的文件扩展名列表
+  function getAllowedExtensions(fileTypes) {
+    if (!fileTypes || fileTypes.length === 0) {
+      return null // 允许所有文件
+    }
+
+    const extensions = []
+    for (const type of fileTypes) {
+      if (fileTypeGroups[type]) {
+        extensions.push(...fileTypeGroups[type])
+      }
+    }
+    return extensions.length > 0 ? extensions : null
+  }
+
+  // 检查文件扩展名是否匹配
+  function isExtensionMatch(fileName, allowedExtensions) {
+    if (!allowedExtensions) {
+      return true // 未限制类型，允许所有文件
+    }
+    const ext = fileName.split('.').pop()?.toLowerCase()
+    return allowedExtensions.includes(ext)
+  }
+
   // 递归搜索文件
-  async function searchFiles(dir, keyword, results = [], foundPaths = new Set(), depth = 0) {
+  async function searchFiles(
+    dir,
+    keyword,
+    fileTypes,
+    results = [],
+    foundPaths = new Set(),
+    depth = 0
+  ) {
     const maxDepth = 3 // 最大递归深度
     const maxResults = 50 // 最大结果数
 
     if (depth > maxDepth || results.length >= maxResults) {
       return results
     }
+
+    // 获取允许的文件扩展名列表
+    const allowedExtensions = getAllowedExtensions(fileTypes)
 
     try {
       const entries = await readdir(dir, { withFileTypes: true })
@@ -96,13 +131,14 @@ export function registerFileHandlers(app) {
             !entry.name.startsWith('.') &&
             !['node_modules', 'AppData', 'Program Files', 'Windows'].includes(entry.name)
           ) {
-            await searchFiles(fullPath, keyword, results, foundPaths, depth + 1)
+            await searchFiles(fullPath, keyword, fileTypes, results, foundPaths, depth + 1)
           }
         } else if (entry.isFile()) {
-          // 检查文件名是否包含关键字，并且没有去重
+          // 检查文件名是否包含关键字，并且没有去重，并且文件类型匹配
           if (
             entry.name.toLowerCase().includes(keyword.toLowerCase()) &&
-            !foundPaths.has(fullPath)
+            !foundPaths.has(fullPath) &&
+            isExtensionMatch(entry.name, allowedExtensions)
           ) {
             try {
               const fileStat = await stat(fullPath)
@@ -129,7 +165,7 @@ export function registerFileHandlers(app) {
   }
 
   // 搜索本机文件
-  ipcMain.handle('search-files', async (_, keyword) => {
+  ipcMain.handle('search-files', async (_, { keyword, fileTypes = [] }) => {
     if (!keyword || keyword.trim() === '') {
       return []
     }
@@ -161,7 +197,7 @@ export function registerFileHandlers(app) {
       if (searchedDirs.has(searchPath)) continue
       searchedDirs.add(searchPath)
 
-      await searchFiles(searchPath, keyword, allResults, foundPaths)
+      await searchFiles(searchPath, keyword, fileTypes, allResults, foundPaths)
       if (allResults.length >= 50) break
     }
 
@@ -219,7 +255,7 @@ export function registerFileHandlers(app) {
   ipcMain.handle('create-txt-file', async (_, { fileName, content }) => {
     try {
       // 使用系统临时目录
-      const tempDir = await mkdtemp(join(tmpdir(), 'electron-boilerplate-pure-'))
+      const tempDir = await mkdtemp(join(tmpdir(), 'jkc-electron-'))
       const filePath = join(tempDir, `${fileName}.txt`)
 
       // 写入文件内容
@@ -234,7 +270,7 @@ export function registerFileHandlers(app) {
           name: `${fileName}.txt`,
           type: getFileType(filePath),
           size: fileStat.size,
-          path: filePath,
+          path: filePath
         }
       }
     } catch (error) {
@@ -311,7 +347,9 @@ export function registerFileHandlers(app) {
 
       // 获取原文件名（不含扩展名）
       const fileName = filePath.split(/[\\/]/).pop() || 'file'
-      const baseName = fileName.includes('.') ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName
+      const baseName = fileName.includes('.')
+        ? fileName.substring(0, fileName.lastIndexOf('.'))
+        : fileName
 
       // 打开原文件
       const fileHandle = await open(filePath, 'r')
@@ -367,7 +405,7 @@ export function registerFileHandlers(app) {
         const hash = createHash('md5')
         const stream = createReadStream(filePath)
 
-        stream.on('data', (chunk) => {
+        stream.on('data', chunk => {
           hash.update(chunk)
         })
 
@@ -376,7 +414,7 @@ export function registerFileHandlers(app) {
           resolve(md5)
         })
 
-        stream.on('error', (error) => {
+        stream.on('error', error => {
           reject(error)
         })
       } catch (error) {
