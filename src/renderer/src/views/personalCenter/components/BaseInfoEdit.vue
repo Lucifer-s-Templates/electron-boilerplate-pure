@@ -4,7 +4,7 @@
     title="修改基本信息"
     width="668px"
     @confirm="handleConfirm"
-    @cancel="close"
+    @cancel="handleCancel"
   >
     <el-form
       ref="formRef"
@@ -24,6 +24,9 @@
       </el-form-item>
       <el-form-item label="手机号" prop="mobile">
         <el-input v-model="form.mobile" placeholder="请输入手机号" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="form.email" placeholder="请输入邮箱" clearable></el-input>
       </el-form-item>
     </el-form>
   </LuciferDialog>
@@ -49,14 +52,38 @@
   const form = ref({
     orgId: userInfo.value.orgId,
     groupName: userInfo.value.groupName,
-    mobile: userInfo.value.mobile
+    mobile: userInfo.value.mobile,
+    email: userInfo.value.email
   })
 
   // 表单验证规则
   const rules = {
     orgId: [{ required: true, message: '请选择单位', trigger: 'change' }],
     groupName: [{ required: true, message: '请输入部门', trigger: 'blur' }],
-    mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }]
+    mobile: [
+      { required: true, message: '请输入手机号', trigger: 'blur' },
+      {
+        validator: (rule, value, callback) => {
+          if (!/^1[3456789]\d{9}$/.test(value)) {
+            callback(new Error('请输入正确的手机号'))
+          } else {
+            callback()
+          }
+        }
+      }
+    ],
+    email: [
+      { required: true, message: '请输入邮箱', trigger: 'blur' },
+      {
+        validator: (rule, value, callback) => {
+          if (!/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(value)) {
+            callback(new Error('请输入正确的邮箱'))
+          } else {
+            callback()
+          }
+        }
+      }
+    ]
   }
 
   // 显示对话框
@@ -69,20 +96,16 @@
     try {
       await getOrgList()
       await userStore.getUserInfo()
+      form.value = {
+        orgId: userInfo.value.orgId,
+        groupName: userInfo.value.groupName,
+        mobile: userInfo.value.mobile,
+        email: userInfo.value.email
+      }
     } finally {
       loading.close()
     }
     baseInfoEditDialogRef.value.show()
-  }
-
-  // 关闭对话框
-  function close() {
-    form.value = {
-      orgId: userInfo.value.orgId,
-      groupName: userInfo.value.groupName,
-      mobile: userInfo.value.mobile
-    }
-    baseInfoEditDialogRef.value.close()
   }
 
   // 获取单位列表
@@ -101,7 +124,8 @@
           userId: userInfo.value.id,
           orgId: form.value.orgId,
           groupName: form.value.groupName,
-          mobile: form.value.mobile
+          mobile: form.value.mobile,
+          email: form.value.email
         })
         emit('save-success', { ...form.value })
         done()
@@ -109,6 +133,11 @@
         load(false)
       }
     })
+  }
+
+  // 取消
+  function handleCancel() {
+    baseInfoEditDialogRef.value.close()
   }
 
   defineExpose({

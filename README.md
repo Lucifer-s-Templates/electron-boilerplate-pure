@@ -13,6 +13,16 @@
 - **状态管理**: `Pinia` + `Electron Store`（持久化）
 - **HTTP 请求**: `Electron net` 模块
 
+### 内置功能
+
+- **文件搜索**: 内置文件搜索功能，支持递归搜索指定目录下的所有文件。
+- **文件操作**: 支持文件的读取、删除、分片等。
+- **文件上传**: 内置自定义文件上传组件，支持拖拽上传。
+- **接口请求**: 支持通过 `Electron` 的 `net` 模块发送 HTTP 请求。
+- **主题设置**: 可以在应用中切换主题（亮色/系统/暗黑）。
+- **更新管理**: 支持自动检查并下载最新版本的应用程序。
+- **数据持久化**: 采用 `Electron Store` 持久化应用状态，包括用户信息、主题设置等。
+
 ### 项目结构
 
 ```plaintext
@@ -91,7 +101,15 @@ $ yarn build:linux
 ```bash
 # 配置文件
 # 开发环境 dev-app-update.yml
-# 生成环境 electron-builder.yml
+# 生产环境 electron-builder.yml
+
+# 更新服务器：http://129.204.62.166:10002/pure-updates
+  # 注意：请将服务器地址替换为自己的服务器地址
+  # nginx配置示例：
+    # location ^~/pure-updates/ {
+    #   alias /path/to/electron-boilerplate-pure/;
+    # }
+  # `/path/to/electron-boilerplate-pure/`目录下需包含setup.exe和latest.yml文件
 
 # ========== 第1次发布（v1.0.0）==========
 
@@ -101,9 +119,7 @@ npm version 1.0.0
 # 2. 打包
 yarn build:win
 
-# 3. 上传（首次安装包）
-scp dist/electron-boilerplate-pure-1.0.0-setup.exe user@server:/electron-boilerplate-pure/pure-updates/
-
+# 3. 上传安装包（dist/electron-boilerplate-pure-1.0.0-setup.exe）到更新服务器
 
 # ========== 第2次发布（v1.0.1）==========
 
@@ -126,9 +142,7 @@ forceUpdate: true
 # 最低支持版本（可选，一般为最近的强制更新版本，低于此版本时也会强制更新）
 minSupportVersion: 1.0.1
 
-# 4. 上传到更新服务器
-scp dist/latest.yml user@server:/electron-boilerplate-pure/pure-updates/
-scp dist/electron-boilerplate-pure-1.0.1-setup.exe user@server:/electron-boilerplate-pure/pure-updates/
+# 4. 上传安装包（dist/electron-boilerplate-pure-1.0.1-setup.exe）和日志文件（dist/latest.yml）到更新服务器
 
 # 5. 已安装 v1.0.0 的用户下次启动时会自动检测到更新
 ```

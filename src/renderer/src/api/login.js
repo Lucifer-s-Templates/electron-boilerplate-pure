@@ -39,7 +39,8 @@ export function getInfo() {
           realName: '林炸炸',
           orgId: 1,
           groupName: '开发部',
-          mobile: '18888888888'
+          mobile: '18888888888',
+          email: 'luciferoho@foxmail.com'
         }
       })
     }, 1500)

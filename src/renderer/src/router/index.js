@@ -79,13 +79,6 @@ export const constantRoutes = [
         component: PersonalCenter,
         name: 'PersonalCenter',
         meta: { title: '我的', icon: 'UserFilled' }
-      },
-      {
-        path: '/feedback',
-        component: () => import('@renderer/views/personalCenter/feedback.vue'),
-        name: 'Feedback',
-        hidden: true,
-        meta: { title: '意见反馈', icon: '', activeMenu: '/personalCenter' }
       }
     ]
   },

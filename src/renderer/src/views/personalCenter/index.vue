@@ -1,27 +1,63 @@
 <template>
   <div class="app-container personal-center">
-    <div class="personal-main">
-      <UserInfo />
-      <div class="module-container">
-        <div class="module-item" v-for="item in moduleList" :key="item.key">
-          <div class="module-item-main" @click="onModuleClick(item)">
-            <div class="module-icon" :style="{ backgroundColor: item.iconBgColor }">
-              <el-icon :size="30" color="#fff">
+    <div class="personal-card">
+      <!-- 用户信息 -->
+      <div class="left-section">
+        <div class="user-profile">
+          <div class="avatar-wrapper">
+            <el-avatar class="user-avatar" :size="100" :src="userStore.avatar">
+              <el-icon :size="40"><User /></el-icon>
+            </el-avatar>
+          </div>
+          <div class="nickname">{{ userInfo.realName || '昵称' }}</div>
+        </div>
+        <div class="user-contact">
+          <div class="contact-item">
+            <span class="label">手机号</span>
+            <span class="value">{{ userInfo.mobile || '未绑定' }}</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">邮箱</span>
+            <span class="value"> {{ userInfo.email || '未绑定' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 功能菜单 -->
+      <div class="right-section">
+        <div class="menu-list">
+          <div
+            class="menu-item"
+            v-for="item in moduleList"
+            :key="item.key"
+            @click="onModuleClick(item)"
+          >
+            <div class="menu-icon" :style="{ backgroundColor: item.iconBgColor }">
+              <el-icon :size="20">
                 <component :is="item.icon" />
               </el-icon>
             </div>
-            <div class="module-name">{{ item.name }}</div>
+            <span class="menu-name">{{ item.name }}</span>
+            <el-icon class="arrow"><ArrowRight /></el-icon>
           </div>
         </div>
       </div>
     </div>
-    <div class="personal-footer">
-      <el-button type="primary" size="large" @click="handleLogout">退出系统</el-button>
+
+    <!-- 退出登录按钮 -->
+    <div class="logout-section">
+      <el-button type="danger" size="large" @click="handleLogout">
+        <el-icon><SwitchButton /></el-icon>
+        退出登录
+      </el-button>
     </div>
-    <!-- 修改基本信息 -->
+
+    <!-- 基本信息 -->
     <BaseInfoEdit ref="baseInfoEditRef" @save-success="onBaseInfoSaveSuccess" />
     <!-- 修改密码 -->
     <PasswordEdit ref="passwordEditRef" @save-success="onPwdSaveSuccess" />
+    <!-- 意见反馈 -->
+    <Feedback ref="feedbackRef" />
   </div>
 </template>
 
@@ -29,21 +65,24 @@
   import { useRouter } from 'vue-router'
   import useUserStore from '@renderer/store/modules/user'
   import { getSystemFile } from '@renderer/api/personalCenter'
-  import UserInfo from './components/UserInfo.vue'
   import BaseInfoEdit from './components/BaseInfoEdit.vue'
   import PasswordEdit from './components/PasswordEdit.vue'
+  import Feedback from './components/Feedback.vue'
 
   const router = useRouter()
   const userStore = useUserStore()
   const { proxy } = getCurrentInstance()
   const baseInfoEditRef = ref(null)
   const passwordEditRef = ref(null)
+  const feedbackRef = ref(null)
+
+  const userInfo = computed(() => userStore.userInfo || {})
 
   // 模块列表
   const moduleList = [
     {
       key: 'baseInfoEdit',
-      name: '修改基本信息',
+      name: '基本信息',
       icon: 'User',
       iconBgColor: '#409EFF',
       onClick: () => baseInfoEditRef.value.show()
@@ -60,7 +99,7 @@
       name: '意见反馈',
       icon: 'Message',
       iconBgColor: '#0099FF',
-      routeName: 'Feedback'
+      onClick: () => feedbackRef.value.show()
     },
     {
       key: 'softwareDescription',
@@ -78,13 +117,10 @@
     }
   ]
 
+  // 点击功能模块
   function onModuleClick(item) {
     if (item.onClick) {
       item.onClick()
-      return
-    }
-    if (item.routeName) {
-      router.push({ name: item.routeName })
       return
     }
     proxy.$message.info('暂未开放')
@@ -177,97 +213,164 @@
 
 <style lang="scss" scoped>
   .personal-center {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: var(--el-bg-color-page);
 
-    .personal-main {
+    .personal-card {
+      display: flex;
+      width: 800px;
+      min-height: 450px;
+      background: var(--el-bg-color);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--el-box-shadow);
+      overflow: hidden;
+    }
+
+    // 左侧区域
+    .left-section {
+      width: 340px;
+      padding: 40px 50px 40px 30px;
+      background: var(--el-bg-color);
+      border-right: 1px solid var(--el-border-color);
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: calc(100% - 65px);
-      overflow: auto;
+      justify-content: center;
 
-      .module-container {
-        --item-gap: 40px;
-        --side-margin: 20px;
-        width: calc(100% - var(--side-margin) * 2);
+      .user-profile {
         display: flex;
-        flex-wrap: wrap;
-        background: var(--el-bg-color);
-        border-radius: 10px;
-        padding: 40px;
-        gap: var(--item-gap);
-        margin: 40px var(--side-margin);
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
 
-        .module-item {
-          width: calc((100% - var(--item-gap) * 4) / 5);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .avatar-wrapper {
+          margin-bottom: 16px;
 
-          .module-item-main {
-            width: fit-content;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
+          .user-avatar {
+            border: 3px solid var(--el-bg-color);
+            box-shadow: var(--el-box-shadow-light);
             user-select: none;
 
-            &:hover {
-              .module-icon {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-              }
-
-              .module-icon .el-icon {
-                animation: wiggle 0.5s ease;
-              }
-
-              .module-name {
-                font-weight: 600;
-              }
+            img {
+              width: 80%;
+              height: 80%;
             }
 
-            .module-icon {
-              padding: 16px;
-              border-radius: 6px;
-              line-height: 1;
+            &:hover img {
+              transform: scale(1.1);
             }
+          }
+        }
 
-            .module-name {
-              font-size: 14px;
-              line-height: 14px;
-              color: var(--el-text-color-primary);
-              margin-top: 12px;
-            }
+        .nickname {
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--el-text-color-primary);
+        }
+      }
 
-            @keyframes wiggle {
-              25% {
-                transform: rotate(10deg);
-              }
-              75% {
-                transform: rotate(-10deg);
-              }
-            }
+      .user-contact {
+        width: 100%;
+
+        .contact-item {
+          display: flex;
+          align-items: center;
+          padding: 14px 16px;
+          margin-bottom: 16px;
+          background: var(--el-bg-color);
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          border: 1px solid var(--el-border-color);
+
+          .label {
+            font-size: 14px;
+            color: var(--el-text-color-secondary);
+            margin-right: 12px;
+            min-width: 50px;
+            user-select: none;
+          }
+
+          .value {
+            flex: 1;
+            font-size: 14px;
+            color: var(--el-text-color-regular);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
     }
 
-    .personal-footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 12px 16px;
-      background: var(--el-bg-color);
-      border-top: 1px solid var(--el-border-color);
+    // 右侧区域
+    .right-section {
+      flex: 1;
+      padding: 30px;
+
+      .menu-list {
+        .menu-item {
+          display: flex;
+          align-items: center;
+          padding: 18px 20px;
+          margin-bottom: 8px;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: var(--el-color-primary-light-9);
+
+            .arrow {
+              color: var(--el-color-primary);
+              transform: translateX(4px);
+            }
+          }
+
+          .menu-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-right: 14px;
+            color: #fff;
+            transition: all 0.3s ease;
+          }
+
+          .menu-name {
+            flex: 1;
+            font-size: 15px;
+            color: var(--el-text-color-primary);
+            font-weight: 500;
+          }
+
+          .arrow {
+            color: var(--el-text-color-secondary);
+            font-size: 16px;
+            transition: all 0.3s ease;
+          }
+        }
+      }
+    }
+
+    // 退出登录按钮
+    .logout-section {
+      margin-top: 30px;
 
       .el-button {
-        width: 240px;
-        border-radius: 20px;
+        width: 200px;
+        border-radius: 25px;
+        font-size: 15px;
+
+        .el-icon {
+          margin-right: 6px;
+        }
       }
     }
   }
