@@ -15,6 +15,7 @@
     </div>
     <div class="file-upload__tip">
       最多只能上传 {{ maxFileCount }} 个文件，每个文件大小不能超过 {{ formatFileSize(maxFileSize) }}
+      <span v-if="allowedExtensionStr">，支持上传 {{ allowedExtensionStr }} 类型的文件</span>
     </div>
     <div class="file-list">
       <div class="file-item" v-for="(item, index) in files" :key="item.uuid">
@@ -33,16 +34,17 @@
   </div>
 </template>
 <script setup>
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import { formatFileSize } from '../../../utils/index.js'
+  import { fileTypeGroups } from '../../../../../shared/fileTypeConfig.js'
   const { proxy } = getCurrentInstance()
 
   const props = defineProps({
-    // 限制可选文件类型，默认所有文件
-    // all-所有文件, image-图片文件, video-视频文件, audio-音频文件, document-文档文件, archive-压缩文件
+    // 限制可选文件类型，不传默认所有文件
+    // all-所有文件, image-图片, video-视频, audio-音频, document-文档, archive-压缩文件
     fileTypes: {
       type: Array,
-      default: () => []
+      default: () => ['image', 'video']
     },
     // 限制上传文件数量，默认9个
     maxFileCount: {
@@ -175,6 +177,33 @@
     return Math.random().toString(36).substring(2) + Date.now().toString(36)
   }
 
+  // 允许的文件扩展名列表（从共享配置获取）
+  const allowedExtensions = computed(() => {
+    if (!props.fileTypes || props.fileTypes.length === 0) {
+      return null // 允许所有文件
+    }
+
+    const extensions = []
+    for (const type of props.fileTypes) {
+      if (fileTypeGroups[type]) {
+        extensions.push(...fileTypeGroups[type])
+      }
+    }
+    return extensions.length > 0 ? extensions : null
+  })
+
+  // 允许的文件扩展名字符串
+  const allowedExtensionStr = computed(() => {
+    return allowedExtensions.value ? allowedExtensions.value.join('、') : ''
+  })
+
+  // 获取文件扩展名
+  function getFileExtension(fileName) {
+    if (!fileName) return ''
+    const lastDotIndex = fileName.lastIndexOf('.')
+    return lastDotIndex > -1 ? fileName.slice(lastDotIndex + 1).toLowerCase() : ''
+  }
+
   // 公共校验函数：检查是否可以添加文件
   function validateFileCanAdd(file, fileName) {
     // 检查文件数量限制
@@ -190,6 +219,15 @@
         `文件【${fileName}】大小超过 ${formatFileSize(props.maxFileSize)}，无法添加`
       )
       return false
+    }
+
+    // 检查文件类型限制
+    if (allowedExtensions.value) {
+      const ext = getFileExtension(fileName)
+      if (!allowedExtensions.value.includes(ext)) {
+        proxy.$message.warning(`文件【${fileName}】类型不支持，无法添加到上传列表`)
+        return false
+      }
     }
 
     // 检查文件是否已存在
