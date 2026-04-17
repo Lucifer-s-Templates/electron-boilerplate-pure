@@ -2,7 +2,7 @@
   <div class="global-search">
     <div class="search-wrap">
       <el-input
-        style="width: 50%"
+        style="width: 60%"
         v-model="fileFilterText"
         placeholder="请输入文件名"
         size="large"

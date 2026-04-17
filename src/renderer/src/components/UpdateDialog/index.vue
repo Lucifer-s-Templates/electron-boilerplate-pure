@@ -95,7 +95,7 @@
     }
   })
 
-  const emit = defineEmits(['close', 'skip'])
+  const emit = defineEmits(['close'])
 
   const visible = ref(false)
   const downloading = ref(false)

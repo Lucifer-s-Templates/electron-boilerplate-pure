@@ -17,7 +17,7 @@
       最多只能上传 {{ maxFileCount }} 个文件，每个文件大小不能超过 {{ formatFileSize(maxFileSize) }}
       <span v-if="allowedExtensionStr">，支持上传 {{ allowedExtensionStr }} 类型的文件</span>
     </div>
-    <div class="file-list">
+    <div v-if="files.length" class="file-list">
       <div class="file-item" v-for="(item, index) in files" :key="item.uuid">
         <div class="file-item__left">
           <el-icon class="file-icon">
@@ -253,6 +253,8 @@
 </script>
 <style lang="scss" scoped>
   .file-upload {
+    width: 100%;
+
     .file-upload__main {
       display: flex;
       flex-direction: column;

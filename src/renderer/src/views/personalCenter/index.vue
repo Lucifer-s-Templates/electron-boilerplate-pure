@@ -256,12 +256,14 @@
             box-shadow: var(--el-box-shadow-light);
             user-select: none;
 
-            img {
+            :deep(img) {
               width: 80%;
               height: 80%;
+              border-radius: 50%;
+              transition: all 0.3s ease;
             }
 
-            &:hover img {
+            &:hover :deep(img) {
               transform: scale(1.1);
             }
           }
