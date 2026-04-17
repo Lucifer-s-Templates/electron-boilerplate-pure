@@ -19,9 +19,8 @@
     height: 100%;
     width: 100%;
     display: flex;
-    color: #333;
+    color: var(--el-text-color-primary);
     font-size: 14px;
-    border-top: 1px solid var(--el-border-color);
 
     .sidebar-container {
       width: 100px;

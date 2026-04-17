@@ -230,6 +230,7 @@
     background: var(--el-bg-color);
     -webkit-app-region: drag; // 允许拖拽窗口
     user-select: none;
+    border-bottom: 1px solid var(--el-border-color);
 
     &.is-mac {
       height: 38px;
