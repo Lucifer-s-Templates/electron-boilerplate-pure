@@ -3,7 +3,6 @@ import { ref, readonly } from 'vue'
 export const ELECTRON_STORE_TOKEN = 'token'
 export const ELECTRON_STORE_USER = 'user'
 export const ELECTRON_STORE_SETTING = 'setting'
-export const ELECTRON_STORE_MSG = 'msg'
 
 /**
  * Electron Store 组合式函数

@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    DiskBox: typeof import('./components/DiskBox/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
@@ -36,6 +37,8 @@ declare module 'vue' {
     ElSplitterPanel: typeof import('element-plus/es')['ElSplitterPanel']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FileUpload: typeof import('./components/FileUpload/index.vue')['default']
+    GlobalSearch: typeof import('./components/GlobalSearch/index.vue')['default']
     LuciferDialog: typeof import('./components/LuciferDialog/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

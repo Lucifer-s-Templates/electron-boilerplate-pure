@@ -10,14 +10,14 @@
 </template>
 
 <script setup>
-  import DesktopIcon from '../../../assets/icons/desktop.png'
-  import DownloadIcon from '../../../assets/icons/download.png'
-  import VideoIcon from '../../../assets/icons/video.png'
-  import DocumentIcon from '../../../assets/icons/document.png'
-  import DiskIcon from '../../../assets/icons/disk.png'
-  import WechatIcon from '../../../assets/icons/wechat.png'
-  import QQIcon from '../../../assets/icons/qq.png'
-  import OtherIcon from '../../../assets/icons/other.png'
+  import DesktopIcon from '../../assets/images/disk-icons/desktop.png'
+  import DownloadIcon from '../../assets/images/disk-icons/download.png'
+  import VideoIcon from '../../assets/images/disk-icons/video.png'
+  import DocumentIcon from '../../assets/images/disk-icons/document.png'
+  import DiskIcon from '../../assets/images/disk-icons/disk.png'
+  import WechatIcon from '../../assets/images/disk-icons/wechat.png'
+  import QQIcon from '../../assets/images/disk-icons/qq.png'
+  import OtherIcon from '../../assets/images/disk-icons/other.png'
 
   const props = defineProps({
     // 限制可选文件类型，默认所有文件
@@ -115,7 +115,7 @@
       }
 
       &:hover {
-        box-shadow: 0 0 10px #e4e7ed;
+        box-shadow: var(--el-box-shadow);
 
         .disk-name {
           color: #409eff;

@@ -9,12 +9,7 @@
       <div class="module-container">
         <div class="module-title">选择文件</div>
         <div class="module-content">
-          <FileUpload
-            ref="fileUploadRef"
-            v-model:files="form.fileList"
-            :max-file-count="MAX_FILE_COUNT"
-            :max-file-size="MAX_FILE_SIZE"
-          />
+          <FileUpload ref="fileUploadRef" v-model:files="form.fileList" />
           <div class="mt-16">
             <div class="mb-10 flex-row ali-center">*上传目录</div>
             <el-radio-group v-if="catalogueList.length" v-model="form.catalogue">
@@ -61,16 +56,9 @@
 </template>
 
 <script setup>
-  import useUserStore from '../../store/modules/user.js'
-  import useUpload from '../../composables/useUpload.js'
-  import { useElectronStore, ELECTRON_STORE_MSG } from '../../composables/useElectronStore.js'
-  import GlobalSearch from './components/GlobalSearch.vue'
-  import DiskBox from './components/DiskBox.vue'
-  import FileUpload from './components/FileUpload.vue'
-
-  const userStore = useUserStore()
-  const { MAX_FILE_COUNT, MAX_FILE_SIZE, CHUNK_FILE_SIZE } = useUpload()
-  const electronStore = useElectronStore()
+  import GlobalSearch from '../../components/GlobalSearch/index.vue'
+  import DiskBox from '../../components/DiskBox/index.vue'
+  import FileUpload from '../../components/FileUpload/index.vue'
 
   const { proxy } = getCurrentInstance()
 
