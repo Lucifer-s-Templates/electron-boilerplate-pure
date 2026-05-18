@@ -46,7 +46,7 @@
                 }"
               ></div>
             </div>
-            <div v-if="isLast" class="no-more">加载完毕</div>
+            <div v-if="isLast" class="no-more">到底了~</div>
             <el-empty v-if="!list.length" description="暂无数据"></el-empty>
           </el-scrollbar>
         </div>
@@ -97,9 +97,9 @@
     loading.value = true
     try {
       const res = await getNoticeList({ ...queryParams.value })
-      const data = res?.data?.objs || []
+      const data = res?.data?.rows || []
       list.value = [...list.value, ...data]
-      total.value = res?.data?.rows || 0
+      total.value = res?.data?.total || 0
       isLast.value = res?.data?.last
     } finally {
       loading.value = false

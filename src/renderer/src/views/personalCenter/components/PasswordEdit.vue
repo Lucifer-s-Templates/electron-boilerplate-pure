@@ -20,7 +20,6 @@
           placeholder="请输入旧密码"
           type="password"
           show-password
-          clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="新密码" prop="newPassword">
@@ -29,7 +28,6 @@
           placeholder="请输入新密码"
           type="password"
           show-password
-          clearable
         ></el-input>
       </el-form-item>
     </el-form>

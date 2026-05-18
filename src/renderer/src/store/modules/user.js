@@ -40,10 +40,10 @@ const useUserStore = defineStore('user', () => {
   const isDefaultAvatar = computed(() => avatar.value === defaultAvatar.value)
 
   // 登录
-  function login({ mobile, password }) {
+  function login({ username, password }) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await sysLogin({ mobile, password })
+        const res = await sysLogin({ username, password })
         console.log('账号密码登录成功', res)
         const { access_token: accessToken } = res.data
         token.value = accessToken

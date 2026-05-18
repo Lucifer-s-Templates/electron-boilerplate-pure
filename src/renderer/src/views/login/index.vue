@@ -5,17 +5,17 @@
     </div>
     <el-form ref="loginRef" class="login-form" :model="loginForm" :rules="loginRules">
       <div class="app-name">{{ appName }}</div>
-      <el-form-item prop="mobile">
+      <el-form-item prop="username">
         <el-input
-          v-model="loginForm.mobile"
+          v-model="loginForm.username"
           type="text"
           size="large"
           auto-complete="off"
-          placeholder="手机号"
+          placeholder="用户名"
         >
           <template #prefix>
             <el-icon class="el-input__icon input-icon">
-              <Iphone />
+              <User />
             </el-icon>
           </template>
         </el-input>
@@ -27,6 +27,7 @@
           size="large"
           auto-complete="off"
           placeholder="密码"
+          show-password
           @keyup.enter="handleLogin"
         >
           <template #prefix>
@@ -62,16 +63,14 @@
   const appName = import.meta.env.VITE_APP_NAME
   const userStore = useUserStore()
 
-  const isDev = import.meta.env.DEV
-
   const loginRef = ref(null)
   const loginForm = ref({
-    mobile: isDev ? '18888888888' : '',
-    password: isDev ? '123456' : ''
+    username: 'lucifer',
+    password: '123456'
   })
 
   const loginRules = {
-    mobile: [{ required: true, trigger: 'blur', message: '请输入手机号' }],
+    username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
     password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
   }
 
@@ -81,12 +80,12 @@
   function handleLogin() {
     loginRef.value.validate(async valid => {
       if (!valid) return
-      const { mobile, password } = loginForm.value
+      const { username, password } = loginForm.value
       loading.value = true
       // 调用store的登录方法
       await userStore
         .login({
-          mobile,
+          username,
           password
         })
         .finally(() => {

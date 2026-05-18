@@ -121,7 +121,6 @@
       try {
         load(true)
         await updateBaseInfo({
-          userId: userInfo.value.id,
           orgId: form.value.orgId,
           groupName: form.value.groupName,
           mobile: form.value.mobile,

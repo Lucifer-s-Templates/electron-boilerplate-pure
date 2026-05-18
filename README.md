@@ -147,6 +147,10 @@ minSupportVersion: 1.0.1
 # 5. 已安装 v1.0.0 的用户下次启动时会自动检测到更新
 ```
 
+### mock-api 服务仓库地址
+
+[ebp-json-server](https://github.com/luciferoho/ebp-json-server)
+
 ## 常见问题
 
 ### 1. 中文乱码问题

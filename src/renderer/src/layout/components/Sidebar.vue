@@ -4,7 +4,7 @@
       <div class="avatar">
         <el-image :src="avatar" alt="" />
       </div>
-      <div class="real-name">{{ realName }}</div>
+      <div class="real-name">{{ nickname }}</div>
     </div>
     <div class="menu-container">
       <router-link
@@ -36,7 +36,7 @@
   const userStore = useUserStore()
 
   const avatar = computed(() => userStore.avatar)
-  const realName = computed(() => userStore.userInfo.realName)
+  const nickname = computed(() => userStore.userInfo.nickname)
 
   const menuList = ref([
     {

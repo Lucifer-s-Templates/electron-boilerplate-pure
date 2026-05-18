@@ -9,7 +9,7 @@
               <el-icon :size="40"><User /></el-icon>
             </el-avatar>
           </div>
-          <div class="nickname">{{ userInfo.realName || '昵称' }}</div>
+          <div class="nickname">{{ userInfo.nickname || '昵称' }}</div>
         </div>
         <div class="user-contact">
           <div class="contact-item">
@@ -64,7 +64,7 @@
 <script setup>
   import { useRouter } from 'vue-router'
   import useUserStore from '@renderer/store/modules/user'
-  import { getSystemFile } from '@renderer/api/personalCenter'
+  import { getSoftwareDoc, getSoftwareInstaller } from '@renderer/api/personalCenter'
   import BaseInfoEdit from './components/BaseInfoEdit.vue'
   import PasswordEdit from './components/PasswordEdit.vue'
   import Feedback from './components/Feedback.vue'
@@ -149,18 +149,13 @@
 
   // 下载软件说明
   async function downloadSoftwareDescription() {
-    const version = await window.api.getAppVersion()
     const loading = proxy.$loading({
       lock: true,
       text: '正在请求服务器，请稍候...',
       background: 'rgba(0, 0, 0, 0.7)'
     })
     try {
-      const res = await getSystemFile({
-        // 类型 1-软件说明文档  2-客户端安装包
-        fileType: 1,
-        version
-      })
+      const res = await getSoftwareDoc()
       const { fileName } = res.data
       const fileBaseUrl = import.meta.env.VITE_APP_FILE_URL
       window.open(`${fileBaseUrl}/operation-manual/${fileName}`)
@@ -183,10 +178,7 @@
     })
     try {
       // 不传版本号，直接下载最新版本
-      const res = await getSystemFile({
-        // 类型 1-软件说明文档  2-客户端安装包
-        fileType: 2
-      })
+      const res = await getSoftwareInstaller()
       const { fileName } = res.data
       const fileBaseUrl = import.meta.env.VITE_APP_FILE_URL
       window.open(`${fileBaseUrl}/${fileName}`)
