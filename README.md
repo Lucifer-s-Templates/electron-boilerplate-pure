@@ -75,6 +75,10 @@ $ yarn
 
 # 运行项目
 $ yarn dev
+
+# 测试账号
+# admin / lumos123
+# lucifer / 123456
 ```
 
 ### 调试
@@ -150,6 +154,26 @@ minSupportVersion: 1.0.1
 ### mock-api 服务仓库地址
 
 [ebp-json-server](https://github.com/luciferoho/ebp-json-server)
+
+## 项目截图
+
+![登录](./docs/screenshot/login.png)
+
+### 亮色主题
+
+![首页](./docs/screenshot/light/index.png)
+![我的](./docs/screenshot/light/my.png)
+![通知公告](./docs/screenshot/light/notice.png)
+![更新](./docs/screenshot/light/update.png)
+![强制更新](./docs/screenshot/light/update-force.png)
+
+### 暗黑主题
+
+![首页](./docs/screenshot/dark/index.png)
+![我的](./docs/screenshot/dark/my.png)
+![通知公告](./docs/screenshot/dark/notice.png)
+![更新](./docs/screenshot/dark/update.png)
+![强制更新](./docs/screenshot/dark/update-force.png)
 
 ## 常见问题
 
