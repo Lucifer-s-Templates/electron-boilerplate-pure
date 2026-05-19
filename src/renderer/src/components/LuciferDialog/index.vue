@@ -221,7 +221,8 @@
     }
 
     &__title {
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 600;
       text-align: center;
       color: var(--el-text-color-primary);
       letter-spacing: 0.5px;

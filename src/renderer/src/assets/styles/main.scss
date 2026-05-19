@@ -60,3 +60,15 @@ html.dark:root {
     border-radius: 4px;
   }
 }
+
+// 全局设置 Message 距离顶部的基础高度
+// 这里通过 CSS transform 来偏移整个消息容器
+.el-message.is-center {
+  transform: translate(-50%, 36px) !important;
+}
+
+// 避免 Dialog 全屏时遮挡标题栏
+.el-modal-dialog,
+.el-overlay-dialog {
+  top: 40px !important;
+}

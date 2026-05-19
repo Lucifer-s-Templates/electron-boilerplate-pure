@@ -7,6 +7,7 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center
+    modal-class="update-dialog-modal"
     :z-index="9998"
   >
     <div class="update-container">
@@ -446,5 +447,13 @@
         background: var(--el-color-success-light-9);
       }
     }
+  }
+</style>
+
+<style lang="scss">
+  // 遮住TitleBar
+  .update-dialog-modal,
+  .update-dialog-modal .el-overlay-dialog {
+    top: 0 !important;
   }
 </style>
