@@ -26,7 +26,7 @@
 ### 项目结构
 
 ```plaintext
-electron-app/
+electron-boilerplate-pure/
 ├── build/                 # 构建资源
 ├── dist/                  # 构建输出
 ├── src/
